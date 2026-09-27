@@ -1,0 +1,661 @@
+:root {
+
+    /*==========================================
+        COLORES PRINCIPALES (misma paleta que el original)
+    ==========================================*/
+
+    --color-principal: #000180;
+    --color-principal-hover: #1B2FBF;
+    --color-principal-activo: #3248E6;
+
+    /*==========================================
+        FONDOS
+    ==========================================*/
+
+    --color-fondo: #02030A;
+    --color-fondo-secundario: #04060F;
+    --color-fondo-terciario: #060A1C;
+
+    /*==========================================
+        TEXTO
+    ==========================================*/
+
+    --color-texto: #E8EEFF;
+    --color-texto-secundario: #BFCBFF;
+    --color-texto-apagado: #8796D8;
+
+    /* Gris de las cursivas: más claro que el #555555 original para que se lea bien sobre el vidrio oscuro */
+    --color-gris: #8C93A6;
+
+    /* Azul de los enlaces: de la misma familia que --color-principal-activo, pero más luminoso para que sea legible */
+    --color-enlace: #6F86FF;
+    --color-enlace-hover: #A3B2FF;
+
+    /*==========================================
+        BORDES
+    ==========================================*/
+
+    --color-borde-suave: rgba(36, 60, 190, .25);
+    --color-brillo-borde: rgba(191, 203, 255, .10);
+
+    /*==========================================
+        SOMBRAS Y RESPLANDORES
+    ==========================================*/
+
+    --sombra-principal: rgba(0, 1, 128, .45);
+    --sombra-suave: rgba(39, 64, 255, .18);
+    --resplandor-titulo: rgba(111, 134, 255, .35);
+    --resplandor-titulo-suave: rgba(111, 134, 255, .12);
+    --color-seleccion: rgba(50, 72, 230, .45);
+
+    /*==========================================
+        GLASS (la card de la carta)
+    ==========================================*/
+
+    --glass-carta: rgba(4, 6, 16, .42); /* Vidrio de la carta: deja ver un poco el cielo sin perder legibilidad */
+    --glass-carta-solido: rgba(4, 6, 16, .90); /* Respaldo para navegadores sin backdrop-filter */
+
+    /*==========================================
+        CIELO (los usa script.js para dibujar en el canvas)
+    ==========================================*/
+
+    --estrella-blanca: #F4F6FF;
+    --estrella-azul: #BFCBFF;
+    --estrella-celeste: #9FB4FF;
+    --estrella-calida: #FFE9C7;
+    --estrella-fugaz: #F4F6FF;
+
+    /* Nebulosas, vía láctea y horizonte */
+    --nebulosa-azul: rgba(50, 72, 230, .14);
+    --nebulosa-violeta: rgba(112, 84, 214, .10);
+    --nebulosa-profunda: rgba(27, 47, 191, .10);
+    --via-lactea-centro: rgba(191, 203, 255, .07);
+    --via-lactea-borde: rgba(111, 134, 255, .03);
+    --horizonte: rgba(0, 1, 128, .35);
+    --transparente: rgba(0, 0, 0, 0);
+
+    /* Luna */
+    --luna-centro: #F4F6FF;
+
+    /*==========================================
+        DEGRADADOS
+    ==========================================*/
+
+    --degradado-fondo: linear-gradient(
+        180deg,
+        #02030A 0%,
+        #04060F 35%,
+        #05081A 70%,
+        #060A1C 100%
+    );
+
+    /*==========================================
+        TIPOGRAFÍAS (todas de Google Fonts)
+    ==========================================*/
+
+    --fuente-bungee-hairline: "Bungee Hairline", sans-serif;
+    --fuente-cutive-mono: "Cutive Mono", monospace;
+    --fuente-geist-pixel: "Geist Pixel", monospace;
+    --fuente-geo: "Geo", sans-serif;
+    --fuente-geostar: "Geostar", sans-serif;
+    --fuente-graduate: "Graduate", serif;
+    --fuente-ibm-plex-mono: "IBM Plex Mono", monospace;
+    --fuente-jetbrains-mono: "JetBrains Mono", monospace;
+    --fuente-major-mono: "Major Mono Display", monospace;
+    --fuente-monda: "Monda", sans-serif;
+    --fuente-oxanium: "Oxanium", sans-serif;
+    --fuente-playwrite-id: "Playwrite ID", cursive;
+    --fuente-quantico: "Quantico", sans-serif;
+    --fuente-saira-condensed: "Saira Condensed", sans-serif;
+    --fuente-share-tech-mono: "Share Tech Mono", monospace;
+    --fuente-space-grotesk: "Space Grotesk", sans-serif;
+    --fuente-iconos: "Material Symbols Rounded";
+
+    /* Roles: cambiando solo estas 3 líneas cambia la tipografía de toda la página */
+    --fuente-titulo: var(--fuente-playwrite-id);   /* Manuscrita suave: se siente como una carta */
+    --fuente-texto: var(--fuente-ibm-plex-mono);   /* Máquina de escribir, muy legible y con cursivas reales */
+    --fuente-detalle: var(--fuente-share-tech-mono); /* Para el pie (versión y fecha) */
+
+    /*==========================================
+        MOVIMIENTO (curvas lentas y suaves para todas las animaciones)
+    ==========================================*/
+
+    --curva-calma: cubic-bezier(.22, 1, .36, 1);
+
+    /*==========================================
+        MEDIDAS RESPONSIVE (mobile first)
+        Los valores base son para CELULAR; más abajo, los @media los agrandan para tablet y escritorio.
+    ==========================================*/
+
+    --margen-lateral: 14px;       /* Espacio entre la carta y el borde de la pantalla */
+    --relleno-carta: 1.35rem;     /* Espacio interno de la carta */
+    --radio-carta: 1.25rem;       /* Redondeo de la carta */
+    --desenfoque-carta: 14px;     /* Desenfoque del vidrio (un poco menos en celular: rinde mejor) */
+    --tamano-texto: 0.94rem;      /* Tamaño del texto de la carta */
+    --interlineado: 1.95;         /* Separación entre renglones */
+    --tamano-luna: 46px;
+}
+
+/*==========================================
+    BASE
+==========================================*/
+
+/* Barra de scroll con el color principal (igual que el original) */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-principal) var(--color-fondo-secundario);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%; /* Evita que el celular agrande el texto solo al girar la pantalla */
+    text-size-adjust: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-fondo-secundario);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-principal);
+    border-radius: 10px;
+    border: 2px solid var(--color-fondo-secundario);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-principal-hover);
+}
+
+/* Color al seleccionar texto, dentro de la paleta */
+::selection {
+    background: var(--color-seleccion);
+    color: var(--color-texto);
+}
+
+html, body {
+    background: var(--color-fondo);
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    color: var(--color-texto-secundario);
+    font-family: var(--fuente-texto);
+    -webkit-tap-highlight-color: var(--transparente); /* Sin recuadro al tocar en el celular */
+    -webkit-font-smoothing: antialiased;
+}
+
+/*==========================================
+    TIPOS DE TEXTO (cursiva gris, enlace azul, negrita)
+==========================================*/
+
+/* Cursivas en gris, como en el original */
+em, i {
+    font-style: italic;
+    color: var(--color-gris);
+}
+
+/* Enlaces en azul. En celular (sin mouse) llevan un subrayado fino fijo para que se note que se pueden tocar */
+a {
+    color: var(--color-enlace);
+    text-decoration: underline;
+    text-decoration-color: var(--color-borde-suave);
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+    transition: color 0.6s ease, text-decoration-color 0.6s ease;
+}
+
+a:active {
+    color: var(--color-enlace-hover);
+}
+
+/* El efecto hover solo existe en dispositivos con mouse (en celular el hover queda "pegado" al tocar) */
+@media (hover: hover) {
+    a {
+        text-decoration-color: var(--transparente);
+        text-decoration: underline;
+    }
+
+    a:hover {
+        color: var(--color-enlace-hover);
+        text-decoration-color: var(--color-enlace-hover);
+    }
+
+    .bajar:hover {
+        color: var(--color-texto);
+    }
+}
+
+a:focus-visible,
+.bajar:focus-visible {
+    outline: 2px solid var(--color-principal-activo);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Negritas un poco más claras para que resalten sin gritar */
+strong, b {
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+/*==========================================
+    FONDO DE NOCHE ESTRELLADA
+==========================================*/
+
+/* Usa el alto "grande" de la pantalla (100lvh): así el cielo no salta
+   cuando en el celular aparece o se esconde la barra del navegador */
+.fondo-noche {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100lvh;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--degradado-fondo);
+    pointer-events: none;
+}
+
+/* Canvas donde script.js dibuja las estrellas (que se mueven) y las fugaces */
+.cielo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    animation: aparecer 3.5s ease 0.2s forwards; /* El cielo "se enciende" despacio al entrar */
+}
+
+/* Nubes de color muy tenues que se mueven lentísimo, dan profundidad al cielo */
+.nebulosa {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    will-change: transform;
+}
+
+.nebulosa-1 {
+    width: 90vmax;
+    height: 60vmax;
+    top: -18vmax;
+    left: -30vmax;
+    background: radial-gradient(closest-side, var(--nebulosa-azul), var(--transparente));
+    animation: flotar-nebulosa 70s ease-in-out infinite alternate;
+}
+
+.nebulosa-2 {
+    width: 80vmax;
+    height: 55vmax;
+    bottom: -12vmax;
+    right: -30vmax;
+    background: radial-gradient(closest-side, var(--nebulosa-violeta), var(--transparente));
+    animation: flotar-nebulosa 90s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes flotar-nebulosa {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(6vmax, 4vmax) scale(1.12); }
+}
+
+/* Franja diagonal de la vía láctea: respira muy despacio.
+   En celular (pantalla vertical) va más inclinada para cruzar la pantalla de punta a punta */
+.via-lactea {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 180vmax;
+    height: 30vmax;
+    transform: translate(-50%, -50%) rotate(-58deg);
+    background:
+        radial-gradient(ellipse 50% 50% at 50% 50%, var(--via-lactea-centro), var(--transparente) 70%),
+        radial-gradient(ellipse 35% 80% at 38% 55%, var(--nebulosa-profunda), var(--transparente) 70%),
+        radial-gradient(ellipse 30% 70% at 64% 45%, var(--via-lactea-borde), var(--transparente) 70%);
+    filter: blur(20px);
+    animation: respirar-via-lactea 24s ease-in-out infinite;
+}
+
+@keyframes respirar-via-lactea {
+    0%, 100% { opacity: 0.75; }
+    50%      { opacity: 1; }
+}
+
+/* Luna del original, con un halo más suave (más chica en celular para no tapar el título) */
+.luna {
+    position: absolute;
+    top: calc(5% + env(safe-area-inset-top, 0px));
+    right: 8%;
+    width: var(--tamano-luna);
+    height: var(--tamano-luna);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--luna-centro) 0%, var(--color-principal-activo) 55%, var(--transparente) 75%);
+    box-shadow: 0 0 50px 10px var(--sombra-suave), 0 0 120px 30px var(--resplandor-titulo-suave);
+    opacity: 0;
+    animation:
+        aparecer-luna 4s ease 0.6s forwards,
+        respirar-luna 10s ease-in-out 4.6s infinite;
+}
+
+@keyframes aparecer-luna {
+    to { opacity: 0.8; }
+}
+
+@keyframes respirar-luna {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50%      { opacity: 0.95; transform: scale(1.04); }
+}
+
+/* Resplandor azul muy tenue en la parte de abajo, como un horizonte lejano */
+.horizonte {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 35%;
+    background: linear-gradient(to top, var(--horizonte), var(--transparente));
+}
+
+/*==========================================
+    PÁGINA
+==========================================*/
+
+/* Márgenes laterales que respetan el notch / bordes curvos del celular */
+.pagina {
+    position: relative;
+    z-index: 1;
+    padding-left: max(var(--margen-lateral), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--margen-lateral), env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+}
+
+/* Portada: ocupa la pantalla visible del celular (100svh) y deja el título justo en el medio */
+.portada {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+/* Tamaño del título: crece con el ancho, pero también se limita por el alto (celular acostado) */
+.titulo {
+    font-family: var(--fuente-titulo);
+    font-weight: 200;
+    font-size: clamp(2.4rem, min(14vw, 17vh), 6.5rem);
+    line-height: 1.5;
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0 0.2em;
+    overflow-wrap: break-word;
+    /* Entrada: aparece desde un desenfoque, con las letras acercándose de a poco */
+    opacity: 0;
+    filter: blur(12px);
+    letter-spacing: 0.08em; /* En celular se separa menos al entrar para no desbordar la pantalla */
+    animation:
+        entrar-titulo 3.2s var(--curva-calma) 0.8s forwards,
+        respirar-titulo 9s ease-in-out 4s infinite;
+}
+
+@keyframes entrar-titulo {
+    to {
+        opacity: 1;
+        filter: blur(0);
+        letter-spacing: 0.02em;
+    }
+}
+
+/* Resplandor que respira muy despacio alrededor del título */
+@keyframes respirar-titulo {
+    0%, 100% { text-shadow: 0 0 18px var(--resplandor-titulo-suave), 0 0 40px var(--resplandor-titulo-suave); }
+    50%      { text-shadow: 0 0 22px var(--resplandor-titulo), 0 0 60px var(--resplandor-titulo-suave); }
+}
+
+/* Flechita para bajar: área táctil de 48px (cómoda para el dedo), aparece después del título y se mece */
+.bajar {
+    position: absolute;
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-texto-apagado);
+    opacity: 0;
+    animation:
+        aparecer-suave 2s ease 3.6s forwards,
+        mecer 4s ease-in-out 3.6s infinite;
+    transition: color 0.6s ease;
+}
+
+.bajar .material-symbols-rounded {
+    font-family: var(--fuente-iconos);
+    font-size: 2.2rem;
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    line-height: 1;
+    display: block;
+}
+
+@keyframes aparecer-suave {
+    to { opacity: 0.8; }
+}
+
+@keyframes mecer {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 8px; }
+}
+
+/* Se esconde la flechita cuando ya se empezó a leer (clase puesta por script.js) */
+.bajar.oculta {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+}
+
+@keyframes aparecer {
+    to { opacity: 1; }
+}
+
+/*==========================================
+    LA CARTA (vidrio oscuro y borroso)
+==========================================*/
+
+.carta {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: calc(var(--relleno-carta) * 1.3) var(--relleno-carta);
+    box-sizing: border-box;
+    background: var(--glass-carta);
+    -webkit-backdrop-filter: blur(var(--desenfoque-carta)) saturate(120%);
+    backdrop-filter: blur(var(--desenfoque-carta)) saturate(120%);
+    border: 1px solid var(--color-borde-suave);
+    border-radius: var(--radio-carta);
+    box-shadow:
+        0 24px 60px var(--sombra-principal),
+        0 0 50px var(--sombra-suave),
+        inset 0 1px 0 var(--color-brillo-borde);
+    /* Entrada de la card al llegar con el scroll (clase .visible puesta por script.js) */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.8s var(--curva-calma), transform 1.8s var(--curva-calma);
+}
+
+.carta.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Si el navegador no soporta el desenfoque, la card se vuelve más opaca para que el texto se siga leyendo perfecto */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .carta {
+        background: var(--glass-carta-solido);
+    }
+}
+
+/* Texto de la carta: tamaño e interlineado pensados para leer cómodo en celular */
+.carta p {
+    font-family: var(--fuente-texto);
+    font-weight: 400;
+    font-size: var(--tamano-texto);
+    line-height: var(--interlineado);
+    color: var(--color-texto-secundario);
+    margin: 0 0 1.5em;
+    text-wrap: pretty;
+    overflow-wrap: break-word; /* Palabras o links muy largos no rompen el ancho en pantallas chicas */
+    hyphens: auto;
+}
+
+.carta p:last-child {
+    margin-bottom: 0;
+}
+
+/* Saludo y firma en la tipografía manuscrita del título */
+.carta .saludo,
+.carta .firma {
+    font-family: var(--fuente-titulo);
+    font-weight: 300;
+    font-size: calc(var(--tamano-texto) * 1.15);
+    line-height: 2.2;
+    color: var(--color-texto);
+    hyphens: none;
+}
+
+.carta .firma {
+    text-align: right;
+    margin-top: 2.2em;
+}
+
+/* Cada párrafo aparece de a uno al scrollear: sube un poquito y se enfoca */
+.revelar {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+    transition:
+        opacity 1.6s var(--curva-calma),
+        transform 1.6s var(--curva-calma),
+        filter 1.6s var(--curva-calma);
+}
+
+.revelar.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/*==========================================
+    PIE (versión y fecha)
+==========================================*/
+
+.pie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 3rem 0 calc(2rem + env(safe-area-inset-bottom, 0px));
+    font-family: var(--fuente-detalle);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--color-texto-apagado);
+    opacity: 0.6;
+}
+
+/*==========================================
+    RESPONSIVE (de celular chico a escritorio)
+==========================================*/
+
+/* Celulares muy angostos (ej: iPhone SE / 320-360px): un poco más de aire para el texto */
+@media (max-width: 360px) {
+    :root {
+        --margen-lateral: 10px;
+        --relleno-carta: 1.1rem;
+        --tamano-texto: 0.88rem;
+    }
+}
+
+/* Celular acostado: la portada no necesita tanto alto y la luna se achica */
+@media (orientation: landscape) and (max-height: 500px) {
+    :root {
+        --tamano-luna: 34px;
+    }
+
+    .via-lactea {
+        transform: translate(-50%, -50%) rotate(-28deg);
+    }
+}
+
+/* Tablets */
+@media (min-width: 600px) {
+    :root {
+        --margen-lateral: 24px;
+        --relleno-carta: 2.4rem;
+        --radio-carta: 1.5rem;
+        --desenfoque-carta: 18px;
+        --tamano-texto: 1rem;
+        --interlineado: 2;
+        --tamano-luna: 58px;
+    }
+
+    .titulo {
+        letter-spacing: 0.18em;
+    }
+
+    .bajar {
+        bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+/* Escritorio: la vía láctea vuelve a la inclinación suave (pantalla horizontal) */
+@media (min-width: 900px) {
+    :root {
+        --relleno-carta: 3.2rem;
+        --tamano-texto: 1.02rem;
+        --tamano-luna: 64px;
+    }
+
+    .via-lactea {
+        transform: translate(-50%, -50%) rotate(-28deg);
+    }
+
+    .pie {
+        padding-top: 4rem;
+    }
+}
+
+/*==========================================
+    MOVIMIENTO REDUCIDO
+    Respeta la preferencia del usuario: todo aparece directo y sin animaciones
+==========================================*/
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .revelar,
+    .carta {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
